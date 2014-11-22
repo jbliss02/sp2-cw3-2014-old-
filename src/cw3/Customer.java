@@ -1,38 +1,32 @@
-/**
- * 
- */
 package cw3;
 
-/**
- * @author jbliss02 & rsalvi01
- * 
- * Customer class which holds the information related to a single customer
- * defines a unique id for this customer and randomly picks a starting and destination floor
- * defines whether the customer is in the elevator or not
- */
 public class Customer {
 
 	private int currentFloor;
 	private int destinationFloor;
 	private static int id;
 	private boolean inElevator;
-
-	public int GetCurrentFloor() {
-		return this.currentFloor;
+	private boolean finished;
+	
+	public int getId() {
+		return id;
 	}
 	
-	public void SetCurrentFloor(int input) {
-		this.currentFloor = input;
-	}
-	
-	public int GetDestinationFloor() {
-		return this.destinationFloor;
-	}
-	
-	public void SetDestinationFloor(int input) {
-		this.destinationFloor = input;
+	public int getCurrentFloor() {
+		return currentFloor;
 	}
 
+	public void setCurrentFloor(int currentFloor) {
+		this.currentFloor = currentFloor;
+	}
+
+	public int getDestinationFloor() {
+		return destinationFloor;
+	}
+
+	public void setDestinationFloor(int destinationFloor) {
+		this.destinationFloor = destinationFloor;
+	}
 
 	public boolean isInElevator() {
 		return inElevator;
@@ -42,24 +36,50 @@ public class Customer {
 		this.inElevator = inElevator;
 	}
 
+	public boolean isFinished() {
+		return finished;
+	}
 
-	public Customer()
-	{
-		this.setId(id++);
-		SetRandomFloors();
+	public void setFinished(boolean finished) {
+		this.finished = finished;
 	}
 	
-	private void SetRandomFloors()
+	
+	/**
+	 * Creates ONE customer and sets the starting and destination floors 
+	 * @param noOfFloors
+	 */
+	
+	public Customer()
 	{
 		
 	}
-
-	public static void setId(int id) {
-		Customer.id = id;
+	
+	public Customer(int noOfFloors)
+	{
+		id++;
+		setCurrentFloor(randInt(0,noOfFloors));
+		setDestinationFloor(randInt(0,noOfFloors));
+		finished = false;
 	}
 
-	
-	
-	
-	
+	/**
+	* Returns a pseudo-random number between min and max, inclusive.
+	* 13 cannot be assigned as a starting or destination floor
+	*
+	* @param min Minimum value
+	* @param max Maximum value. Must be greater than min.
+	* @return Integer between min and max, inclusive.
+	*/
+	private int randInt(int min, int max)
+	{
+		int value = 13;
+		
+		while (value == 13)
+		{
+			value = min + (int)(Math.random() * ((max - min) + 1));
+		}
+		
+		return value;
+	}
 }
