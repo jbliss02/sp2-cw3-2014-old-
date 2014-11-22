@@ -56,7 +56,7 @@ public class Program {
 		building = new Building(customerList, numberFloors, randInt(0, numberFloors));
 	}
 	
-	/**
+	/**..
 	* Returns a pseudo-random number between min and max, inclusive.
 	* 13 cannot be assigned as a starting or destination floor
 	*
