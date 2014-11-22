@@ -2,7 +2,7 @@ package cw3;
 
 public class Customer {
 
-	private int currentFloor;
+	private int startingFloor;
 	private int destinationFloor;
 	private static int id;
 	private boolean inElevator;
@@ -12,12 +12,12 @@ public class Customer {
 		return id;
 	}
 	
-	public int getCurrentFloor() {
-		return currentFloor;
+	public int getStartingFloor() {
+		return startingFloor;
 	}
 
-	public void setCurrentFloor(int currentFloor) {
-		this.currentFloor = currentFloor;
+	public void setStartingFloor(int startingFloor) {
+		this.startingFloor = startingFloor;
 	}
 
 	public int getDestinationFloor() {
@@ -51,36 +51,14 @@ public class Customer {
 	 * @param noOfFloors
 	 */
 	
-	public Customer()
-	{
-		
-	}
 	
-	public Customer(int noOfFloors)
+	public Customer(int noOfFloors, int currentFloor, int destinationFloor)
 	{
 		id++;
-		setCurrentFloor(randInt(0,noOfFloors));
-		setDestinationFloor(randInt(0,noOfFloors));
+		this.startingFloor = currentFloor;
+		this.destinationFloor = destinationFloor;
 		finished = false;
 	}
 
-	/**
-	* Returns a pseudo-random number between min and max, inclusive.
-	* 13 cannot be assigned as a starting or destination floor
-	*
-	* @param min Minimum value
-	* @param max Maximum value. Must be greater than min.
-	* @return Integer between min and max, inclusive.
-	*/
-	private int randInt(int min, int max)
-	{
-		int value = 13;
-		
-		while (value == 13)
-		{
-			value = min + (int)(Math.random() * ((max - min) + 1));
-		}
-		
-		return value;
-	}
+
 }
