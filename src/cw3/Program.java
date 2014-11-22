@@ -36,7 +36,7 @@ public class Program {
 		
 		building.elevator.go();
 		
-		
+		System.out.println("removw me");
 	}
 	
 	private static void createCustomerList(int numberCustomers, int numberFloors) 
