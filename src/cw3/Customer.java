@@ -46,6 +46,7 @@ public class Customer {
 	
 	
 	/**
+	 * @author jbliss02 & rsalvi01
 	 * Creates ONE customer and sets the starting and destination floors 
 	 * @param noOfFloors
 	 */
