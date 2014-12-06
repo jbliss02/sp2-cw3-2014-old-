@@ -18,7 +18,7 @@ public class Elevator {
 	private ArrayList<Customer> customerList;
 	private int currentFloor;
 	private int startingFloor;
-	private int movingDirection; //1 is up, 0 is not set, -1 is down
+	public int movingDirection; //1 is up, 0 is not set, -1 is down
 	public int numberMoves;
 	
 	/**
@@ -52,6 +52,9 @@ public class Elevator {
 				break;
 			case 2:
 				if(customerList.size() > 0) {superMove();}
+				break;	
+			case 3:
+				if(customerList.size() > 0) {superMove2();}
 				break;
 			}
 			
@@ -86,25 +89,92 @@ public class Elevator {
 	
 	
 	private void superMove()
-	{			
-		
+	{				
 		for (int i = 0; i < customerList.size(); i++)
 		{
 			if (customerList.get(i).isInElevator() && customerList.get(i).getDestinationFloor() > currentFloor)  
 			{
-				movingDirection = 1;
+				movingDirection = +1;
 			}
 			else if (!customerList.get(i).isInElevator() && customerList.get(i).getStartingFloor() > currentFloor)
 			{
-				movingDirection = 1;
+				movingDirection = +1;
 			}
 			else {movingDirection = -1;}
 		}
 		
 		currentFloor += movingDirection;
-		numberMoves++;
-		
+		numberMoves++;		
 	}
+	
+	private void superMove2()
+	{				
+		for (int i = 0; i < customerList.size(); i++)
+		{
+			if (customerList.get(i).isInElevator() && customerList.get(i).getDestinationFloor() > currentFloor)  
+			{
+				floorsToMove(1);
+			}
+			else if (!customerList.get(i).isInElevator() && customerList.get(i).getStartingFloor() > currentFloor)
+			{
+				floorsToMove(1);
+			}
+			else {floorsToMove(-1);}
+		}
+		
+		currentFloor += movingDirection;
+		numberMoves++;		
+	}
+	
+	//1 is up, -1 is down
+	public void floorsToMove(int direction)
+	{
+		if(direction == 1)
+		{
+			int nextFloorUp = NUMBERFLOORS;
+			for(int i = 0; i < customerList.size(); i++)
+			{
+				if(customerList.get(i).isInElevator() && customerList.get(i).getDestinationFloor() > currentFloor)
+				{
+					if (nextFloorUp > customerList.get(i).getDestinationFloor())
+					{
+						nextFloorUp = customerList.get(i).getDestinationFloor();
+					}
+				}
+				else if (!customerList.get(i).isInElevator() && customerList.get(i).getStartingFloor() > currentFloor)
+				{
+					if (nextFloorUp > customerList.get(i).getStartingFloor())
+					{
+						nextFloorUp = customerList.get(i).getStartingFloor();
+					}
+				}
+			}//for each customer (i)
+			movingDirection = (nextFloorUp - currentFloor) * direction;
+		}
+		else if (direction == -1)
+		{
+			int nextFloorDown = 0;
+			for(int i = 0; i < customerList.size(); i++)
+			{
+				if(customerList.get(i).isInElevator() && customerList.get(i).getDestinationFloor() < currentFloor)
+				{
+					if (nextFloorDown < customerList.get(i).getDestinationFloor())
+					{
+						nextFloorDown = customerList.get(i).getDestinationFloor();
+					}
+				}
+				else if (!customerList.get(i).isInElevator() && customerList.get(i).getStartingFloor() < currentFloor)
+				{
+					if (nextFloorDown < customerList.get(i).getStartingFloor())
+					{
+						nextFloorDown = customerList.get(i).getStartingFloor();
+					}
+				}
+			}//for each customer (i)
+			movingDirection = (currentFloor - nextFloorDown) * direction;
+		}
+
+	}//floorsToMove
 	
 
 	public void pickUpCustomer()

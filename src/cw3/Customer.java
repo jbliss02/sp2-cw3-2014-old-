@@ -57,6 +57,7 @@ public class Customer {
 		id++;
 		this.startingFloor = currentFloor;
 		this.destinationFloor = destinationFloor;
+		this.inElevator = false;
 		finished = false;
 	}
 
