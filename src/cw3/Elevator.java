@@ -19,9 +19,9 @@ public class Elevator {
 	private int currentFloor;
 	private int startingFloor;
 	private int movingDirection; //1 is up, 0 is not set, -1 is down
-	private int numberMoves;
+	public int numberMoves;
 	
-	/**]
+	/**
 	 * Constructor
 	 * @param customerList 
 	 * @param numberFloors
@@ -34,14 +34,28 @@ public class Elevator {
 		movingDirection = 0;
 		numberMoves = 0;
 	}
+	/**
+	 * 
+	 * @param strategy - defines which lift strategy to run 
+	 */
 	
-	public void go()
+	public void go(int strategy)
 	{
 		while(customerList.size() > 0)
-		{
+		{			
 			pickUpCustomer();
 			dropOffCustomer();
-			if(customerList.size() > 0) {basicMove();}
+			
+			switch(strategy){
+			case 1:
+				if(customerList.size() > 0) {basicMove();}
+				break;
+			case 2:
+				if(customerList.size() > 0) {superMove();}
+				break;
+			}
+			
+			
 		}
 		
 		System.out.println("finished in " + numberMoves);
@@ -70,6 +84,28 @@ public class Elevator {
 
 	}//basicMove()
 	
+	
+	private void superMove()
+	{			
+		
+		for (int i = 0; i < customerList.size(); i++)
+		{
+			if (customerList.get(i).isInElevator() && customerList.get(i).getDestinationFloor() > currentFloor)  
+			{
+				movingDirection = 1;
+			}
+			else if (!customerList.get(i).isInElevator() && customerList.get(i).getStartingFloor() > currentFloor)
+			{
+				movingDirection = 1;
+			}
+			else {movingDirection = -1;}
+		}
+		
+		currentFloor += movingDirection;
+		numberMoves++;
+		
+	}
+	
 
 	public void pickUpCustomer()
 	{
@@ -87,7 +123,7 @@ public class Elevator {
 	{
 		for(int i = customerList.size() - 1; i >= 0; i--)
 		{
-			if(customerList.get(i).getDestinationFloor() == this.currentFloor)
+			if(customerList.get(i).getDestinationFloor() == this.currentFloor && customerList.get(i).isInElevator())
 			{
 				customerList.remove(i);
 			}
